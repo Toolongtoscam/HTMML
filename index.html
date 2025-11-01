@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Your Discord Key</title>
+<style>
+  body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #f0f0f0; }
+  h1 { color: #2e8b57; }
+  button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+  #keyDisplay { margin-top: 20px; font-weight: bold; font-size: 18px; }
+</style>
+</head>
+<body>
+<h1>✅ Get Your Discord Key</h1>
+<p>Click the button below to generate your unique key. Then paste it in the Discord channel to get access!</p>
+<button id="getKeyBtn">Get Key</button>
+<p id="keyDisplay"></p>
+
+<script>
+const BACKEND = "https://your-repl-backend.repl.co"; // ← Replace with your Replit backend URL
+
+document.getElementById("getKeyBtn").onclick = async () => {
+  const btn = document.getElementById("getKeyBtn");
+  btn.disabled = true;
+  btn.innerText = "Generating key...";
+
+  try {
+    const res = await fetch(`${BACKEND}/generate-key`, { method: "POST" });
+    const data = await res.json();
+    document.getElementById("keyDisplay").innerText = "Your key: " + data.key + "\nPaste this in Discord to get your role!";
+  } catch (err) {
+    document.getElementById("keyDisplay").innerText = "❌ Error contacting backend.";
+  }
+
+  btn.innerText = "Get Key";
+  btn.disabled = false;
+};
+</script>
+</body>
+</html>
